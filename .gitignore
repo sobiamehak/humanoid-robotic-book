@@ -1,0 +1,77 @@
+# Dependencies
+/node_modules
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Production
+/build
+
+# Generated files
+.docusaurus
+.cache-loader
+*.egg-info
+*.so
+*.pyd
+
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+coverage/
+htmlcov/
+.coverage
+.pytest_cache/
+.tox/
+.eggs/
+
+# Node.js/JavaScript/TypeScript
+node_modules/
+dist/
+*.log
+.env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.nyc_output
+coverage/
+.nyc_output/
+.npm
+.yarn
+.pnp.*
+webpack.config.js
+
+# Docker
+*.dockerignore
+
+# Database
+*.db
+*.db-journal
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+Thumbs.db
+ehthumbs.db
+Icon?

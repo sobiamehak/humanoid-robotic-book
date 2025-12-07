@@ -1,0 +1,14 @@
+fastapi>=0.68.0
+uvicorn[standard]
+python-dotenv
+sqlalchemy
+qdrant-client
+openai
+tiktoken
+pydantic
+requests
+python-multipart
+passlib[bcrypt]
+python-jose[cryptography]
+alembic
+email-validator

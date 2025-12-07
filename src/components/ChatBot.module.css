@@ -1,0 +1,165 @@
+.chatContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.chatButton {
+  position: fixed;       /* Screen ke sath fix ho jayega */
+  bottom: 20px;          /* Neeche se distance */
+  right: 20px;           /* Right side se distance */
+
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+
+.chatButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.chatButton.open {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+}
+
+.chatWindow {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.chatHeader {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.closeButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.chatMessages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: var(--ifm-color-emphasis-0);
+}
+
+.message {
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 18px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.userMessage {
+  align-self: flex-end;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.botMessage {
+  align-self: flex-start;
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-900);
+  border-bottom-left-radius: 4px;
+}
+
+.chatInputForm {
+  display: flex;
+  padding: 12px;
+  background-color: white;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0 0 8px 8px;
+}
+
+.chatInput {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.chatInput:focus {
+  border-color: var(--ifm-color-primary);
+}
+
+.sendButton {
+  margin-left: 8px;
+  padding: 10px 16px;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.sendButton:hover, .sendButton:focus {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+@media (max-width: 480px) {
+  .chatWindow {
+    width: calc(100% - 40px);
+    height: 50vh;
+    right: 10px;
+    bottom: 70px;
+  }
+}

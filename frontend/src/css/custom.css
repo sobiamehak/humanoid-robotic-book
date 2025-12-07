@@ -1,0 +1,656 @@
+/**
+ * Custom CSS for the Physical AI & Humanoid Robotics Textbook
+ * Enhanced styling for a professional, modern appearance
+ */
+
+/* Color scheme definitions */
+:root {
+  --ifm-color-primary: #2c3e50;
+  --ifm-color-primary-dark: #1a2530;
+  --ifm-color-primary-darker: #0d141b;
+  --ifm-color-primary-darkest: #0a0f14;
+  --ifm-color-primary-light: #3d5266;
+  --ifm-color-primary-lighter: #4d677a;
+  --ifm-color-primary-lightest: #5e7c8f;
+  --ifm-code-font-size: 95%;
+  --ifm-navbar-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  --ifm-footer-background-color: #2c3e50;
+  --ifm-hero-background-color: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+}
+
+/* Dark mode color overrides */
+html[data-theme='dark'] {
+  --ifm-color-primary: #4da6ff;
+  --ifm-color-primary-dark: #0077cc;
+  --ifm-color-primary-darker: #0066b4;
+  --ifm-color-primary-darkest: #005294;
+  --ifm-color-primary-light: #66bbff;
+  --ifm-color-primary-lighter: #80ccff;
+  --ifm-color-primary-lightest: #aaddff;
+}
+
+/* Typography improvements */
+html {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Enhanced navbar styling */
+.navbar {
+  background-color: var(--ifm-color-primary);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  box-shadow: var(--ifm-navbar-shadow);
+  align-items: center;
+  min-height: 60px;
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.navbar__items {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar__items--left {
+  flex: 1;
+}
+
+.navbar__items--right {
+  flex: 0 0 auto;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-right: 2rem;
+}
+
+.navbar__logo {
+  height: 32px;
+  width: 32px;
+  margin-right: 8px;
+  filter: brightness(0) invert(1); /* Make logo white */
+}
+
+.navbar__title {
+  color: white;
+  font-size: 1.25rem;
+  margin-left: 0.5rem;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.navbar__item, .navbar__link {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar__item:hover, .navbar__link:hover {
+  color: white;
+}
+
+/* Language switcher button styling */
+.navbar__item .language-switcher {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.navbar__item .language-switcher:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Chatbot button styling */
+.navbar__item .chatbot-button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  font-size: 1.2rem;
+}
+
+.navbar__item .chatbot-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+/* Urdu font styling */
+.urdu-text {
+  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Urdu Typesetting', serif;
+  direction: rtl;
+  text-align: right;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+/* Chatbot popup styling */
+.chatbot-popup {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.chatbot-container {
+  width: 350px;
+  height: 500px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.chatbot-header {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.chatbot-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.chatbot-messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.message {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border-radius: 18px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.bot-message {
+  background-color: #e3f2fd;
+  border-bottom-left-radius: 5px;
+  margin-right: auto;
+}
+
+.user-message {
+  background-color: #d1ecf1;
+  margin-left: auto;
+  border-bottom-right-radius: 5px;
+}
+
+.chatbot-input-area {
+  padding: 15px;
+  background-color: white;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+}
+
+.chatbot-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  margin-right: 10px;
+  font-size: 0.9rem;
+}
+
+.chatbot-send {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.chatbot-send:hover {
+  background-color: var(--ifm-color-primary-darker);
+}
+
+/* Mobile responsiveness for chatbot */
+@media (max-width: 400px) {
+  .chatbot-container {
+    width: 300px;
+    height: 400px;
+  }
+}
+
+/* Hero banner styling */
+.hero {
+  background: var(--ifm-hero-background-color);
+  padding: 4rem 0;
+  color: white;
+}
+
+.hero__title {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero__subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Enhanced buttons */
+.button {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.button--primary {
+  background-color: var(--ifm-color-primary-light);
+  border-color: var(--ifm-color-primary-light);
+}
+
+.button--primary:hover {
+  background-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+/* Footer enhancements */
+.footer {
+  background-color: var(--ifm-footer-background-color);
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer__title {
+  color: white;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.footer__link-item {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer__link-item:hover {
+  color: white;
+}
+
+/* Content styling */
+.main-wrapper {
+  padding-top: 2rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Card-like styling for content */
+.markdown {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+}
+
+.markdown h1 {
+  border-bottom: 3px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.markdown h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3rem;
+}
+
+/* Code block enhancements */
+.prism-code {
+  border-radius: 8px;
+  font-size: 0.9rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* Blockquote styling */
+blockquote {
+  background-color: rgba(44, 62, 80, 0.1);
+  border-left: 4px solid var(--ifm-color-primary);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Sidebar improvements */
+.menu {
+  padding: 1rem 0;
+}
+
+.menu__list-item {
+  margin-bottom: 0.25rem;
+}
+
+.menu__link {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.menu__link:hover {
+  background-color: rgba(44, 62, 80, 0.1);
+  transform: translateX(4px);
+}
+
+.menu__link--active {
+  background-color: var(--ifm-color-primary);
+  color: white;
+}
+
+/* Table styling */
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.markdown table th, .markdown table td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid #eaecef;
+}
+
+.markdown table th {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  font-weight: 600;
+}
+
+/* Card components */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.card__header {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.card__body {
+  padding: 1.5rem;
+}
+
+/* Alert enhancements */
+.alert {
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.alert--info {
+  background-color: rgba(52, 152, 219, 0.1);
+  border-left: 4px solid #3498db;
+}
+
+.alert--warning {
+  background-color: rgba(243, 156, 18, 0.1);
+  border-left: 4px solid #f39c12;
+}
+
+.alert--success {
+  background-color: rgba(46, 204, 113, 0.1);
+  border-left: 4px solid #2ecc71;
+}
+
+.alert--danger {
+  background-color: rgba(231, 76, 60, 0.1);
+  border-left: 4px solid #e74c3c;
+}
+
+/* List styling */
+.markdown ul, .markdown ol {
+  margin: 1.25rem 0;
+  padding-left: 2rem;
+}
+
+.markdown li {
+  margin-bottom: 0.5rem;
+}
+
+/* Link styling */
+.markdown a, .navbar__item, .footer__link-item {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.markdown a:hover {
+  text-decoration: underline;
+}
+
+/* Highlighted text */
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Professional grid layouts */
+.row--justify-center {
+  justify-content: center;
+}
+
+.row--align-center {
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 996px) {
+  .hero__title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 0;
+  }
+  
+  .hero__title {
+    font-size: 2rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .navbar-sidebar__brand {
+    padding: 1rem;
+  }
+  
+  .padding--lg {
+    padding: 1.5rem;
+  }
+}
+
+/* Additional styling for content pages */
+.doc-markdown {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.doc-item-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Enhanced code syntax highlighting */
+.theme-code-block {
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+/* Special styling for chapter sections */
+.chapter-section {
+  margin: 2.5rem 0;
+  padding: 2rem;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, rgba(255,255,255,1) 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-left: 4px solid var(--ifm-color-primary);
+}
+
+.chapter-theory {
+  border-left: 4px solid #3498db;
+}
+
+.chapter-code {
+  border-left: 4px solid #2ecc71;
+}
+
+.chapter-simulation {
+  border-left: 4px solid #9b59b6;
+}
+
+.chapter-exercises {
+  border-left: 4px solid #f39c12;
+}
+
+/* Styling for interactive elements */
+.interactive-component {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: rgba(44, 62, 80, 0.03);
+  border: 1px solid #e0e0e0;
+}
+
+/* Special emphasis for important concepts */
+.important-concept {
+  display: inline-block;
+  background: linear-gradient(to right, #3498db, #2c3e50);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9em;
+  margin: 0 0.25rem;
+}
+
+/* Animation for elements */
+.fade-in {
+  opacity: 1;
+  animation: fadeIn 0.8s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced table of contents */
+.table-of-contents__link:hover {
+  color: var(--ifm-color-primary);
+}
+
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+/* Button enhancements for interactive features */
+.urdu-button, .personalize-button {
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin: 5px;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.urdu-button:hover, .personalize-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

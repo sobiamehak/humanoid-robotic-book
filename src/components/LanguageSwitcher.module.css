@@ -1,0 +1,28 @@
+.languageSwitcher {
+  margin: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.switcherButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--ifm-navbar-link-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.switcherButton:hover {
+  background-color: var(--ifm-menu-color-background-hover);
+}
+
+@media (max-width: 996px) {
+  .languageSwitcher {
+    margin: 0.5rem 1rem;
+  }
+}

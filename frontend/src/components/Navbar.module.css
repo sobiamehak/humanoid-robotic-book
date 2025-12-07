@@ -1,0 +1,19 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.navbar {
+  background-color: var(--ifm-color-primary);
+}
+
+.navbarSidebarShown {
+  margin-right: var(--doc-sidebar-width);
+}
+
+@media (min-width: 997px) {
+  .navbarSidebarShown {
+    margin-right: 0;
+  }
+}
