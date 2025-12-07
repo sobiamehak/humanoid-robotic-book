@@ -86,28 +86,30 @@ This book prepares you for **the next generation of robotics engineers and AI in
 
 The textbook is organized into four official modules:
 
-### Module 1: The Robotic Nervous System (ROS 2)
-- [Chapter 1: Introduction to Physical AI & Humanoid Robotics](./chapter-01-introduction.mdx)
-- [Chapter 2: The Robotic Nervous System - ROS 2](./chapter-02-the-robotic-nervous-system-ros2.mdx)
+### Module 1: Foundations
+- [Chapter 1: Introduction to Physical AI & Humanoid Robotics](/docs/chapter-01-introduction)
+- [Chapter 2: The Robotic Nervous System - ROS 2](/docs/chapter-02-the-robotic-nervous-system-ros2)
 
-### Module 2: The Digital Twin (Gazebo & Unity)
-- [Chapter 3: Digital Twin - Gazebo and Unity](./chapter-03-kinematics.mdx)
+### Module 2: Core Concepts
+- [Chapter 3: Kinematics](/docs/chapter-03-kinematics)
+- [Chapter 4: Dynamics](/docs/chapter-04-dynamics)
+- [Chapter 5: Perception](/docs/chapter-05-perception)
+- [Chapter 6: Locomotion](/docs/chapter-06-locomotion)
+- [Chapter 7: Manipulation](/docs/chapter-07-manipulation)
 
-### Module 3: The AI-Robot Brain (NVIDIA Isaac)
-- [Chapter 4: NVIDIA Isaac Platform](./chapter-04-dynamics.mdx)
-- [Chapter 5: Perception for Humanoids](./chapter-05-perception.mdx)
-- [Chapter 9: Sim-to-Real Transfer](./chapter-06-locomotion.mdx)
+### Module 3: Intelligence & Learning
+- [Chapter 8: Learning](/docs/chapter-08-learning)
+- [Chapter 9: Cognition](/docs/chapter-09-cognition)
 
-### Module 4: Vision-Language-Action (VLA) & Humanoid Mastery
-- [Chapter 5: Vision-Language-Action (VLA) Models](./chapter-05-perception.mdx)
-- [Chapter 6: Humanoid Kinematics and Dynamics](./chapter-06-locomotion.mdx)
-- [Chapter 7: Bipedal Locomotion and Balance](./chapter-07-manipulation.mdx)
-- [Chapter 8: Dexterous Manipulation](./chapter-08-learning.mdx)
-- [Chapter 9: Learning from Demonstration and RL](./chapter-09-cognition.mdx)
-- [Chapter 10: Conversational and Social Robotics](./chapter-10-humanoid-platforms.mdx)
-- [Chapter 11: Applications and Human-Robot Interaction](./chapter-11-applications.mdx)
-- [Chapter 12: Future of Humanoid Robotics](./chapter-12-future.mdx)
-- [Chapter 13: Ethics, Safety, and Societal Impact](./chapter-13-ethics.mdx)
+### Module 4: Applications & Future
+- [Chapter 10: Humanoid Platforms](/docs/chapter-10-humanoid-platforms)
+- [Chapter 11: Applications](/docs/chapter-11-applications)
+- [Chapter 12: Future](/docs/chapter-12-future)
+- [Chapter 13: Ethics](/docs/chapter-13-ethics)
+
+### Appendices
+- [Appendix A: Technical Specifications](/docs/appendix-a-technical-specifications)
+- [Appendix B: Simulation Environments](/docs/appendix-b-simulation-environments)
 
 ## Interactive Features
 
