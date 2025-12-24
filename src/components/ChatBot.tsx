@@ -33,7 +33,7 @@ const ChatBot = () => {
 
       try {
         // Call backend API to get response from RAG system
-        const response = await fetch('https://mehaksobi-my-book.hf.space/api/ask', {
+        const response = await fetch('https://mehaksobi-my-book.hf.space/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const ChatBot = () => {
         // Add bot response
         const botResponse = {
           id: messages.length + 2,
-          text: data.response,
+          text: data.response || data.answer || 'Sorry, I could not process your request.',
           sender: 'bot'
         };
 
@@ -62,10 +62,23 @@ const ChatBot = () => {
       } catch (error) {
         console.error('Error getting response from backend:', error);
 
+        // Determine the type of error and provide appropriate message
+        let errorMessage = "Sorry, I encountered an error while processing your request. Please try again.";
+
+        if (error instanceof TypeError && error.message.includes('fetch')) {
+          errorMessage = "Network error: Unable to connect to the AI service. Please check your internet connection and try again.";
+        } else if (error.message.includes('CORS')) {
+          errorMessage = "Connection error: Unable to access the AI service due to security restrictions. Please try again later.";
+        } else if (error.message.includes('404') || error.message.includes('405')) {
+          errorMessage = "Service error: The AI service is temporarily unavailable. Please try again later.";
+        } else if (error.message.includes('NetworkError')) {
+          errorMessage = "Network error: Unable to reach the AI service. Please check your connection.";
+        }
+
         // Add error message
         const botResponse = {
           id: messages.length + 2,
-          text: "Sorry, I encountered an error while processing your request. Please try again.",
+          text: errorMessage,
           sender: 'bot'
         };
 

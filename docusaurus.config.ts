@@ -88,6 +88,11 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
+          href: 'https://mehaksobi-my-book.hf.space',
+          label: 'Chatbot',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/sobiamehak/humanoid-robotic-book',
           position: 'right',
           className: 'navbar-github-link',
@@ -132,6 +137,10 @@ const config: Config = {
               to: '/blog',
             },
             {
+              label: 'Chatbot',
+              href: 'https://mehaksobi-my-book.hf.space',
+            },
+            {
               label: 'GitHub',
               href: 'https://github.com/sobiamehak/humanoid-robotic-book',
             },
@@ -148,4 +157,3 @@ const config: Config = {
 };
 
 export default config;
-
