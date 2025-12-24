@@ -1,0 +1,238 @@
+/**
+ * Ultra Modern Physical AI & Humanoid Robotics Theme
+ * Enhanced for better visual appeal - 2025 Edition
+ */
+
+:root {
+  --ifm-color-primary: #3f4366;
+  --ifm-color-primary-dark: #2a2442;
+  --ifm-color-primary-darker: #31284d;
+  --ifm-color-primary-darkest: #1f1f22;
+  --ifm-color-primary-light: #171718;
+  --ifm-color-primary-lighter: #0f0f0f;
+  --ifm-color-primary-lightest: #0e0e0f;
+  
+  --ifm-color-secondary: #1a1a1b;
+  --ifm-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  --ifm-code-font-size: 95%;
+  --ifm-color-content: #242526;
+  --ifm-color-content-secondary: #525860;
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f8f9ff;
+  --ifm-card-background-color: #ffffff;
+  --ifm-card-border-radius: 20px;
+  --ifm-card-shadow: 0 10px 40px rgba(102, 126, 234, 0.15);
+  
+  --ifm-navbar-height: 5.5rem;
+  --ifm-global-radius: 16px;
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark theme - improved contrast */
+html[data-theme='dark'] {
+  --ifm-color-primary: #94aaf1;
+  --ifm-color-primary-dark: #849aef;
+  --ifm-color-primary-darker: #758bec;
+  --ifm-color-content: #ecf0ff;
+  --ifm-color-content-secondary: #b0b8d1;
+  --ifm-background-color: #0a0e17;
+  --ifm-background-surface-color: #111827;
+  --ifm-card-background-color: #161b22;
+  --ifm-card-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtle background pattern for main content */
+.main-wrapper {
+  background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+  min-height: 100vh;
+  position: relative;
+}
+
+html[data-theme='dark'] .main-wrapper {
+  background: linear-gradient(135deg, #0a0e17 0%, #111827 100%);
+}
+
+/* Glassmorphism navbar */
+.navbar {
+  height: var(--ifm-navbar-height);
+  background: rgba(234, 230, 240, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.15);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.1);
+  transition: var(--transition);
+}
+
+html[data-theme='dark'] .navbar {
+  background: rgba(13, 17, 23, 0.8);
+  border-bottom-color: rgba(132, 154, 241, 0.2);
+}
+
+.navbar:hover {
+  background: rgba(210, 205, 241, 0.9);
+  box-shadow: 0 12px 40px rgba(246, 247, 255, 0.18);
+}
+
+.navbar__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--ifm-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.navbar__link {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar__link:hover {
+  background: rgba(102, 126, 234, 0.15);
+  color: var(--ifm-color-primary-darker);
+  transform: translateY(-2px);
+}
+
+.navbar__link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--ifm-gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.navbar__link:hover::before {
+  transform: scaleX(1);
+}
+
+/* Enhanced cards - with subtle inner glow */
+.card {
+  background: var(--ifm-card-background-color);
+  border-radius: var(--ifm-card-border-radius);
+  box-shadow: var(--ifm-card-shadow);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 50px rgba(102, 126, 234, 0.25);
+}
+
+html[data-theme='dark'] .card {
+  border-color: rgba(100, 100, 216, 0.2);
+}
+
+/* Beautiful buttons */
+.button--primary {
+  background: var(--ifm-gradient);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 0.9rem 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.button--primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(248, 249, 250, 0.45);
+}
+
+/* Code blocks with better padding */
+.prism-code {
+  border-radius: 16px !important;
+  padding: 1.5rem !important;
+  border: 1px solid rgba(8, 8, 8, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Footer with stronger gradient */
+.footer {
+  background: var(--ifm-gradient);
+  color: rgb(0, 0, 0);
+  padding: 4rem 0 2rem;
+  margin-top: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(15, 15, 15, 0.3), transparent);
+}
+
+/* Urdu text support */
+.urdu-text,
+html[dir="rtl"] .navbar__title {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', sans-serif;
+  font-weight: 600;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive improvements */
+@media (max-width: 996px) {
+  .navbar__title {
+    font-size: 1.3rem;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+  }
+}
+
+/* GitHub icon in navbar */
+.navbar-github-link::before {
+  content: ' ';
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23667eea' d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.107.823 2.22v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+  transition: all 0.3s ease;
+}
+
+.navbar-github-link:hover::before {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%235a6fd8' d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.107.823 2.22v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+  transform: scale(1.1);
+}
+
+.navbar-github-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.navbar-github-link:hover {
+  background: rgba(102, 126, 234, 0.1);
+}

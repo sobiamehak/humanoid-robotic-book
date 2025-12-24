@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Book RAG Chatbot API
+  description: API for querying the book content using RAG (Retrieval-Augmented Generation)
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Development server
+
+paths:
+  /query:
+    post:
+      summary: Submit a query about the book content
+      description: Submit a user query to be processed by the RAG system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The user's question about the book content
+                  example: "What are the key components of a humanoid robot's locomotion system?"
+                user_context:
+                  type: object
+                  description: Optional additional context about the user session
+                  example: {"session_id": "abc123", "user_id": "user456"}
+      responses:
+        '200':
+          description: Successful response with answer and source information
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - response
+                  - sources
+                  - query_id
+                properties:
+                  response:
+                    type: string
+                    description: The generated response to the user's query
+                    example: "The key components of a humanoid robot's locomotion system include..."
+                  sources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chunk_id:
+                          type: string
+                          description: Unique identifier of the source chunk
+                        content:
+                          type: string
+                          description: The content of the source chunk
+                        score:
+                          type: number
+                          format: float
+                          description: Similarity score of the chunk to the query
+                        source_document:
+                          type: string
+                          description: Reference to the original document/chapter
+                    description: List of source chunks used to generate the response
+                  query_id:
+                    type: string
+                    description: Unique identifier for the query
+                    example: "query-789"
+                  confidence_score:
+                    type: number
+                    format: float
+                    description: Estimated confidence in the response quality
+                    example: 0.85
+        '400':
+          description: Bad request - invalid query format
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                    example: "Query field is required"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                    example: "Failed to process query due to external service error"
+
+  /health:
+    get:
+      summary: Check system health
+      description: Verify that the system and its dependencies are operational
+      responses:
+        '200':
+          description: System is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                properties:
+                  status:
+                    type: string
+                    description: Health status
+                    example: "healthy"
+                  services:
+                    type: object
+                    properties:
+                      qdrant:
+                        type: string
+                        description: Qdrant connection status
+                        example: "connected"
+                      openrouter:
+                        type: string
+                        description: OpenRouter API status
+                        example: "available"
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - error
+                properties:
+                  status:
+                    type: string
+                    description: Health status
+                    example: "unhealthy"
+                  error:
+                    type: string
+                    description: Error message
+                    example: "Qdrant service unavailable"

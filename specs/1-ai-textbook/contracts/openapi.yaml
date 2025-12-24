@@ -1,0 +1,166 @@
+# OpenAPI Specification (Placeholder)
+
+---
+openapi: 3.0.0
+info:
+  title: Physical AI & Humanoid Robotics Textbook API
+  version: 1.0.0
+  description: API for managing textbook content, user authentication, RAG chatbot, personalization, and translation features.
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+  - url: http://localhost:8000/v1
+    description: Development server
+
+tags:
+  - name: Auth
+    description: User authentication and profile management
+  - name: Content
+    description: Textbook chapter and content retrieval
+  - name: Chatbot
+    description: RAG chatbot interactions
+  - name: Personalization
+    description: Dynamic content adaptation
+  - name: Translation
+    description: Real-time Urdu translation
+
+paths:
+  /auth/signup:
+    post:
+      summary: User signup
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                background_info:
+                  type: object
+      responses:
+        '201':
+          description: User created successfully
+  /auth/signin:
+    post:
+      summary: User signin
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: User signed in successfully
+  /profile:
+    get:
+      summary: Get user profile
+      tags: [Auth]
+      responses:
+        '200':
+          description: User profile data
+    put:
+      summary: Update user profile
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                background_info:
+                  type: object
+                personalization_preferences:
+                  type: object
+      responses:
+        '200':
+          description: Profile updated successfully
+  /chapters/{chapter_id}:
+    get:
+      summary: Get chapter content
+      tags: [Content]
+      parameters:
+        - in: path
+          name: chapter_id
+          schema:
+            type: string
+          required: true
+          description: ID of the chapter to retrieve
+      responses:
+        '200':
+          description: Chapter content
+  /chatbot/query:
+    post:
+      summary: Query RAG chatbot
+      tags: [Chatbot]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                context_type:
+                  type: string
+                  enum: [entire_book, selected_text]
+                selected_text:
+                  type: string
+      responses:
+        '200':
+          description: Chatbot response with citations
+  /chapters/{chapter_id}/personalize:
+    post:
+      summary: Personalize chapter content
+      tags: [Personalization]
+      parameters:
+        - in: path
+          name: chapter_id
+          schema:
+            type: string
+          required: true
+          description: ID of the chapter to personalize
+      responses:
+        '200':
+          description: Personalized chapter content
+  /chapters/{chapter_id}/translate/urdu:
+    get:
+      summary: Get Urdu translation of chapter content
+      tags: [Translation]
+      parameters:
+        - in: path
+          name: chapter_id
+          schema:
+            type: string
+          required: true
+          description: ID of the chapter to translate
+      responses:
+        '200':
+          description: Urdu translated chapter content
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerAuth: []
