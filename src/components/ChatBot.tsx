@@ -5,9 +5,10 @@ import styles from './ChatBot.module.css';
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { id: 1, text: 'Hello! How can I help you today?', sender: 'bot' }
+    { id: 1, text: 'Hello! I\'m your AI assistant for the Physical AI & Humanoid Robotics textbook. How can I help you today?', sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const toggleChat = () => {
@@ -20,7 +21,7 @@ const ChatBot = () => {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputValue.trim() !== '') {
+    if (inputValue.trim() !== '' && !isLoading) {
       // Add user message
       const newUserMessage = {
         id: messages.length + 1,
@@ -30,10 +31,12 @@ const ChatBot = () => {
 
       setMessages(prev => [...prev, newUserMessage]);
       setInputValue('');
+      setIsLoading(true);
 
       try {
         // Call backend API to get response from RAG system
-        const response = await fetch('https://mehaksobi-my-book.hf.space/chat', {
+        // Using the /api/ask endpoint which is more appropriate for RAG chatbots
+        const response = await fetch('https://mehaksobi-my-book.hf.space/api/ask', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -83,9 +86,11 @@ const ChatBot = () => {
         };
 
         setMessages(prev => [...prev, botResponse]);
+      } finally {
+        setIsLoading(false);
       }
     }
-  };
+  }; 
 
   // Scroll to bottom of messages when they change
   useEffect(() => {
@@ -142,11 +147,21 @@ const ChatBot = () => {
               onChange={handleInputChange}
               placeholder="Type your message..."
               className={styles.chatInput}
+              disabled={isLoading}
             />
-            <button type="submit" className={styles.sendButton}>
-              Send
+            <button type="submit" className={styles.sendButton} disabled={isLoading}>
+              {isLoading ? 'Sending...' : 'Send'}
             </button>
           </form>
+
+          {/* Show loading indicator when bot is processing */}
+          {isLoading && (
+            <div className={styles.typingIndicator}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          )}
         </div>
       )}
     </div>
