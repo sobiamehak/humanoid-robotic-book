@@ -36,7 +36,7 @@ const ChatBot = () => {
       try {
         // Call backend API to get response from RAG system
         // Using the /api/ask endpoint which is more appropriate for RAG chatbots
-        const response = await fetch('https://riaz110-text-book.hf.space/api', {
+        const response = await fetch('https://riaz110-text-book.hf.space/api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
