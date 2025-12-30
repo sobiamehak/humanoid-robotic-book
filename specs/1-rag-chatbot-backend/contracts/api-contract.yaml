@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: RAG Chatbot API
+  version: 1.0.0
+  description: API for the RAG Chatbot backend
+
+paths:
+  /api/health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: Health status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+
+  /api/chat:
+    post:
+      summary: Chat endpoint with streaming responses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: The user's chat message
+                  example: "Hello, how are you?"
+                selected_text:
+                  type: string
+                  description: Selected text context (optional)
+                  example: "This is some selected text"
+                current_page:
+                  type: string
+                  description: Current page context (optional)
+                  example: "page-123"
+      responses:
+        '200':
+          description: Streaming chat response using Server-Sent Events
+          content:
+            text/event-stream:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum: [chunk, sources, done]
+                  content:
+                    type: string
+                    description: Content for chunk events
+                  sources:
+                    type: array
+                    description: Sources for sources events
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        content:
+                          type: string

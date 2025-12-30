@@ -1,0 +1,76 @@
+# OpenAPI Contract: Enhanced Chat API with Text Selection
+
+openapi: 3.0.0
+info:
+  title: RAG Chatbot API with Text Selection
+  version: 1.0.0
+  description: API for chatbot with text selection and contextual features
+
+paths:
+  /api/chat:
+    post:
+      summary: Send message to chatbot with optional text selection context
+      description: Send a message to the chatbot with optional selected text and current page context for enhanced responses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+            example:
+              message: "Explain this concept"
+              selected_text: "The concept of artificial intelligence involves..."
+              current_page: "/chapter-3/ai-fundamentals"
+              session_id: "session-123"
+      responses:
+        '200':
+          description: Server-Sent Events stream of chat response
+          content:
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ChatResponseStream'
+              example:
+                event: "chunk"
+                data: "Artificial intelligence is..."
+      x-internal: false
+
+components:
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - message
+        - session_id
+      properties:
+        message:
+          type: string
+          description: The user's message or query
+          example: "Explain this concept"
+        selected_text:
+          type: string
+          description: Optional selected text for contextual explanation
+          example: "The concept of artificial intelligence involves..."
+          maxLength: 10000
+        current_page:
+          type: string
+          description: Optional current page context
+          example: "/chapter-3/ai-fundamentals"
+        session_id:
+          type: string
+          description: User session identifier
+          example: "session-123"
+
+    ChatResponseStream:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum: [chunk, sources, navigation, guidance, done]
+          description: Type of event in the stream
+        data:
+          type: string
+          description: Event payload data
+          example: "Artificial intelligence is..."

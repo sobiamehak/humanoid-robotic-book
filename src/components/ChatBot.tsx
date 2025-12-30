@@ -2,9 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import styles from './ChatBot.module.css';
 
+// Define TypeScript interfaces
+interface SourceCitation {
+  title: string;
+  url: string;
+}
+
+interface ChatMessage {
+  id: number;
+  text: string;
+  sender: 'user' | 'bot';
+  sources?: SourceCitation[];
+}
+
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 1, text: 'Hello! I\'m your AI assistant for the Physical AI & Humanoid Robotics textbook. How can I help you today?', sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -23,7 +36,7 @@ const ChatBot = () => {
     e.preventDefault();
     if (inputValue.trim() !== '' && !isLoading) {
       // Add user message
-      const newUserMessage = {
+      const newUserMessage: ChatMessage = {
         id: messages.length + 1,
         text: inputValue,
         sender: 'user'
@@ -35,14 +48,15 @@ const ChatBot = () => {
 
       try {
         // Call backend API to get response from RAG system
-        // Using the /api/ask endpoint which is more appropriate for RAG chatbots
-        const response = await fetch('https://mehaksobi-my-book.hf.space/api/ask', {
+        const response = await fetch('http://localhost:8080/api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            query: inputValue
+            message: inputValue,
+            selected_text: null,
+            current_page: null
           })
         });
 
@@ -50,16 +64,125 @@ const ChatBot = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
+        // Check if the response is an SSE stream
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('text/event-stream')) {
+          // Handle SSE stream
+          const reader = response.body?.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
+          let botMessageContent = '';
+          let sources = [];
 
-        // Add bot response
-        const botResponse = {
-          id: messages.length + 2,
-          text: data.response || data.answer || 'Sorry, I could not process your request.',
-          sender: 'bot'
-        };
+          if (!reader) {
+            throw new Error('No response body');
+          }
 
-        setMessages(prev => [...prev, botResponse]);
+          // Create a temporary bot message to update progressively
+          const tempBotMessageId = messages.length + 2;
+          setMessages(prev => [...prev, {
+            id: tempBotMessageId,
+            text: '',
+            sender: 'bot'
+          } as ChatMessage]);
+
+          let hasReceivedRealContent = false;
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || ''; // Keep last incomplete line in buffer
+
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                try {
+                  const dataStr = line.slice(6); // Remove 'data: ' prefix
+                  if (dataStr.trim()) {
+                    let data;
+                    try {
+                      // Try to parse as JSON first
+                      data = JSON.parse(dataStr);
+                    } catch (jsonError) {
+                      // If it's not valid JSON, treat it as a plain text chunk
+                      // This handles cases where the backend sends raw text instead of structured events
+                      if (!dataStr.includes('Processing your request...')) {
+                        botMessageContent += dataStr;
+                        hasReceivedRealContent = true;
+                        // Update the temporary bot message with new content
+                        setMessages(prev =>
+                          prev.map(msg =>
+                            msg.id === tempBotMessageId
+                              ? { ...msg, text: botMessageContent }
+                              : msg
+                          )
+                        );
+                      }
+                      continue; // Skip the rest of the processing for this line
+                    }
+
+                    switch (data.event) {
+                      case 'chunk':
+                        // Only add the chunk if it's not the processing message or if we haven't received real content yet
+                        if (!data.data.includes('Processing your request...') || !hasReceivedRealContent) {
+                          if (!data.data.includes('Processing your request...')) {
+                            botMessageContent += data.data;
+                            hasReceivedRealContent = true;
+                          } else if (!hasReceivedRealContent) {
+                            // If this is the processing message and we haven't received real content yet,
+                            // don't add it to the message content
+                            break;
+                          }
+                          // Update the temporary bot message with new content
+                          setMessages(prev =>
+                            prev.map(msg =>
+                              msg.id === tempBotMessageId
+                                ? { ...msg, text: botMessageContent }
+                                : msg
+                            )
+                          );
+                        }
+                        break;
+                      case 'sources':
+                        try {
+                          sources = JSON.parse(data.data);
+                          // Don't display sources in the chat message, just store them
+                          // Ensure sources data is not added to botMessageContent
+                        } catch (e) {
+                          console.error('Error parsing sources:', e);
+                        }
+                        break;
+                      case 'done':
+                        // Update the message with final content (sources are not included in the message)
+                        setMessages(prev =>
+                          prev.map(msg =>
+                            msg.id === tempBotMessageId
+                              ? { ...msg, text: botMessageContent, sources: sources } // Add sources as a separate property
+                              : msg
+                          )
+                        );
+                        break; // Exit the while loop after completion
+                    }
+                  }
+                } catch (e) {
+                  console.error('Error parsing SSE data:', e);
+                }
+              }
+            }
+          }
+        } else {
+          // Handle regular JSON response as fallback
+          const data = await response.json();
+          // Add bot response
+          const botResponse: ChatMessage = {
+            id: messages.length + 2,
+            text: data.response || data.answer || 'Sorry, I could not process your request.',
+            sender: 'bot'
+          };
+
+          setMessages(prev => [...prev, botResponse]);
+        }
 
         // The backend agent system already handles off-topic queries and returns appropriate responses
       } catch (error) {
@@ -79,7 +202,7 @@ const ChatBot = () => {
         }
 
         // Add error message
-        const botResponse = {
+        const botResponse: ChatMessage = {
           id: messages.length + 2,
           text: errorMessage,
           sender: 'bot'
@@ -124,10 +247,10 @@ const ChatBot = () => {
           
           <div className={styles.chatMessages}>
             {messages.map((message) => (
-              <div 
-                key={message.id} 
+              <div
+                key={message.id}
                 className={clsx(
-                  styles.message, 
+                  styles.message,
                   { [styles.userMessage]: message.sender === 'user' },
                   { [styles.botMessage]: message.sender === 'bot' }
                 )}
@@ -169,3 +292,5 @@ const ChatBot = () => {
 };
 
 export default ChatBot;
+
+

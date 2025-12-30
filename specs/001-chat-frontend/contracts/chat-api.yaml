@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: RAG Chatbot API
+  description: API for the RAG Chatbot frontend integration
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+paths:
+  /api/chat:
+    post:
+      summary: Send a message to the chatbot and receive a streaming response
+      description: Establishes a Server-Sent Events connection to stream chat responses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: The user's message to send to the chatbot
+                  example: "What is embodied intelligence in humanoid robots?"
+                selected_text:
+                  type: string
+                  description: Optional selected text to provide context
+                  example: "Embodied intelligence refers to the..."
+                  nullable: true
+                current_page:
+                  type: string
+                  description: Optional current page content for context
+                  example: "# Chapter 1: Introduction to Robotics"
+                  nullable: true
+              required:
+                - message
+      responses:
+        '200':
+          description: Server-Sent Events stream with chat response
+          content:
+            text/event-stream:
+              schema:
+                type: object
+                properties:
+                  event:
+                    type: string
+                    enum: [chunk, sources, done]
+                    description: The type of event being sent
+                  data:
+                    type: string
+                    description: The data payload for the event
+              example:
+                event: chunk
+                data: "Embodied intelligence is a concept..."
+        '400':
+          description: Bad request - invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+      required:
+        - error
+        - code
