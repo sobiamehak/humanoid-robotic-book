@@ -70,11 +70,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           {message.content}
         </ReactMarkdown>
       </div>
-      {!isUser && message.sources && message.sources.length > 0 && message.status !== 'sending' && (
-        <div className={styles.sourcesSection}>
-          <SourceCitations sources={message.sources} />
-        </div>
-      )}
     </div>
   );
 };

@@ -40,7 +40,9 @@ async def chat_stream(message: str, selected_text: Optional[str] = None, current
             context, sources = build_context(hits)
 
             # Send the sources event with real source information
-            yield {"event": "sources", "data": json.dumps(sources)}
+            # Ensure proper JSON serialization
+            sources_json = json.dumps(sources, ensure_ascii=False)
+            yield {"event": "sources", "data": sources_json}
 
             # Generate response using LLM with retrieved context
             full_context = context
@@ -81,7 +83,9 @@ async def chat_stream(message: str, selected_text: Optional[str] = None, current
             context, sources = build_context(hits)
 
             # Send sources event
-            yield {"event": "sources", "data": json.dumps(sources)}
+            # Ensure proper JSON serialization
+            sources_json = json.dumps(sources, ensure_ascii=False)
+            yield {"event": "sources", "data": sources_json}
 
             # Generate response using local service
             response_text = generate_local_response(message, context)

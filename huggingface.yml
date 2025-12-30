@@ -1,2 +1,2 @@
-runtime: python3.9
-model: fastapi
+runtime: python3.11
+type: api

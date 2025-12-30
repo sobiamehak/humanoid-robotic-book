@@ -105,9 +105,24 @@ const ChatBot = () => {
                       // Try to parse as JSON first
                       data = JSON.parse(dataStr);
                     } catch (jsonError) {
-                      // If it's not valid JSON, treat it as a plain text chunk
-                      // This handles cases where the backend sends raw text instead of structured events
-                      if (!dataStr.includes('Processing your request...')) {
+                      // If it's not valid JSON, we need to determine if this is a sources event
+                      // that couldn't be parsed due to quote format, or if it's an actual text chunk
+
+                      // Check if this looks like a sources data string (starts with [ and contains 'title' and 'url')
+                      if (dataStr.startsWith('[{') && (dataStr.includes("'title'") || dataStr.includes('"title"')) && (dataStr.includes("'url'") || dataStr.includes('"url"'))) {
+                        // This appears to be sources data that couldn't be parsed as JSON due to quote format
+                        // Try to handle it as sources data without adding to message content
+                        try {
+                          // Attempt to fix the quote format and parse
+                          const fixedDataStr = dataStr.replace(/'/g, '"');
+                          sources = JSON.parse(fixedDataStr);
+                          // Don't add sources data to message content
+                        } catch (parseError) {
+                          console.error('Error parsing sources data:', parseError);
+                          // Still don't add to message content as it's likely sources data
+                        }
+                      } else if (!dataStr.includes('Processing your request...')) {
+                        // This is an actual text chunk, not sources data
                         botMessageContent += dataStr;
                         hasReceivedRealContent = true;
                         // Update the temporary bot message with new content
