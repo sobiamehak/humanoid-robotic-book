@@ -48,7 +48,7 @@ const ChatBot = () => {
 
       try {
         // Call backend API to get response from RAG system
-        const response = await fetch('http://localhost:8080/api/chat', {
+        const response = await fetch('https://mehaksobi-backend.hf.space/api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
